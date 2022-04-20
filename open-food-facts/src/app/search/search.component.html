@@ -1,4 +1,28 @@
 <p>
-    <input type="text">
-    <button>Search</button>
-</p>
+    <input type="text" #newquery />
+    <button (click)="submit(newquery)">Search</button>
+  </p>
+  
+  <div *ngIf="results">
+    <div *ngIf="!results.products || results.products.length == 0">
+      No products were found with the term '{{ query }}'
+    </div>
+    <div *ngIf="results.products && results.products.length > 0">
+      <h1>Results</h1>
+      <div class="row px-2">
+        <div class="col-sm-6 col-md-4" *ngFor="let p of results.products">
+          <div class="bg-success my-2 rounded">
+            <img src="{{ p.image_thumb_url }}" style="height: 120px" />
+            <div class="caption">
+              <h4>
+                <a [routerLink]="['/products', p.id]">
+                  {{ p.product_name }}
+                </a>
+              </h4>
+              <span>{{ p.brands }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
